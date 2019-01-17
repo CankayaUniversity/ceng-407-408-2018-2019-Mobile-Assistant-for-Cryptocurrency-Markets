@@ -199,6 +199,9 @@ header nav ul li#logo a:hover {
 #news-events article.event_2 {
 	background: url('../images/bitcoin_icon.png') top left no-repeat;
 }
+#news-events article.event_3 {
+	background: url('../images/presentation.png') top left no-repeat;
+}
 
 #news-events header time {
 	color: #d17f38;
