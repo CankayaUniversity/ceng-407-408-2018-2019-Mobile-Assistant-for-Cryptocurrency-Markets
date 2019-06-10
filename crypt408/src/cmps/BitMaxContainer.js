@@ -4,9 +4,11 @@ import BookBlock from './BookBlock';
 import Header from './Header';
 
 class BitMaxContainer extends Component {
+  _isMounted = true;
   state = { BTCUSD: [], ETHUSD: [], ETHBTC: [], ETCUSD: [], LTCUSD: [], BTCUSDB: [], ETHUSDB: [], ETHBTCB: [], ETCUSDB: [], LTCUSDB: [] };
-  componentWillMount() {
-    fetch('https://bitmax.io/api/v1/depth?symbol=BTC-USDT').then((response) => response.json()).then((responseData) => {
+  componentDidMount() {
+    if(this._isMounted){
+      fetch('https://bitmax.io/api/v1/depth?symbol=BTC-USDT').then((response) => response.json()).then((responseData) => {
         this.setState({
             BTCUSD: responseData.asks,
             BTCUSDB: responseData.bids
@@ -45,6 +47,10 @@ class BitMaxContainer extends Component {
     }).done();
     }).done();
   }).done();
+  }
+  }
+  componentWillUnmount() {
+    this._isMounted = false;
   }
   renderBTCUSD() {
       return this.state.BTCUSD && this.state.BTCUSD.map(bu =>
@@ -150,7 +156,15 @@ class BitMaxContainer extends Component {
 
   render() {
     return (
+      <View style={{ flex:1 }}>
+      <View style={{ marginBottom: 8 }}>
+      <Text style={{ alignSelf: 'center'}}>
+        <Text style={{ fontWeight: 'bold', fontSize: 15 }}>Fees:</Text> <Text style={{ fontSize: 15 }}>Maker Fee: 0.04%, </Text>
+        <Text style={{ fontSize: 15 }}>Taker Fee: 0.04%</Text>
+      </Text>
+      </View>
       <ScrollView style={{ flex: 1 }}>
+
         {this.renderBTCUSD()}
         {this.renderETHUSD()}
         {this.renderETHBTC()}
@@ -162,6 +176,7 @@ class BitMaxContainer extends Component {
         {this.renderETCUSDB()}
         {this.renderLTCUSDB()}
       </ScrollView>
+      </View>
     );
   }
 }

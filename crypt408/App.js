@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { View, AppRegistry } from 'react-native';
 import { Provider } from 'react-redux';
 import { createAppContainer, createBottomTabNavigator, createStackNavigator, withNavigation, TabBarBottom } from 'react-navigation';
-import { Header } from './src/cmps';
 import { Ionicons } from 'react-native-vector-icons';
 import Store from './src/Store';
 import MainContainer from './src/cmps/MainContainer';
@@ -36,10 +35,16 @@ class HomeScreen extends React.Component {
 }
 
 class MarketScreen extends React.Component {
+  static navigationOptions = {
+    title: 'Markets',
+    headerTitleStyle: {
+      textAlign: 'center'
+    }
+  };
   render() {
     const { navigation } = this.props
     return (
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, backgroundColor: '#424242' }}>
         <MarketContainer navigation={navigation} />
       </View>
     );
@@ -118,7 +123,14 @@ const MarketStack = createStackNavigator(
     OKEx: OKExScreen
   },
   {
-    initialRouteName: 'Markets'
+    initialRouteName: 'Markets',
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: '#424242',
+        marginBottom: 10
+      },
+      headerTintColor: "white"
+    },
   }
 );
 

@@ -7,6 +7,10 @@ class AssistantContainer extends Component{
       this.setState({ coinpair: coinpair })
   }
   handleClick = () => {
+    var cbfee = parseFloat(0.001);
+    var oxfee = parseFloat(0.001);
+    var hbfee = parseFloat(0.001);
+    var bmfee = parseFloat(0.0004);
     if(this.state.coinpair === "btcusd")
     {
       var bidArr = [];
@@ -44,9 +48,72 @@ class AssistantContainer extends Component{
          console.log(this.state.BitMax.bidPrice);
          bidArr.push(parseFloat(this.state.BitMax.bidPrice));
          askArr.push(parseFloat(this.state.BitMax.askPrice));
-         console.log(bidArr);
-         console.log(Math.max(...bidArr));
-         console.log(Math.min(...askArr));
+         var as = Math.min(...askArr);
+         var bi = Math.max(...bidArr);
+         if(askArr.indexOf(as) === 0){
+           if(bidArr.indexOf(bi) === 0){
+             Alert.alert('Trade Path', 'Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * cbfee))
+          }
+           else if(bidArr.indexOf(bi) === 1){
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * oxfee))
+          }
+           else if(bidArr.indexOf(bi) === 2){
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * hbfee))
+          }
+           else{
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * bmfee))
+          }
+         }
+         else if(askArr.indexOf(as) === 1){
+           if(bidArr.indexOf(bi) === 0){Alert.alert('Trade Path', 'You can buy one lot of selected pair from OKEx with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * cbfee))}
+           else if(bidArr.indexOf(bi) === 1){Alert.alert('Trade Path', 'You can buy one lot of selected pair from OKEx with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * oxfee))}
+           else if(bidArr.indexOf(bi) === 2){Alert.alert('Trade Path', 'You can buy one lot of selected pair from OKEx with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * hbfee))}
+           else{Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * bmfee))}
+         }
+         else if(askArr.indexOf(as) === 2){
+           if(bidArr.indexOf(bi) === 0){Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * cbfee))}
+           else if(bidArr.indexOf(bi) === 1){Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * oxfee))}
+           else if(bidArr.indexOf(bi) === 2){Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * hbfee))}
+           else{Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * bmfee))}
+         }
+         else{
+           if(bidArr.indexOf(bi) === 0){Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * cbfee))}
+           else if(bidArr.indexOf(bi) === 1){Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * oxfee))}
+           else if(bidArr.indexOf(bi) === 2){Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * hbfee))}
+           else{Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * bmfee))}
+         }
       }).done();
       }).done();
       }).done();
@@ -89,9 +156,72 @@ class AssistantContainer extends Component{
          console.log(this.state.BitMax.bidPrice);
          bidArr.push(parseFloat(this.state.BitMax.bidPrice));
          askArr.push(parseFloat(this.state.BitMax.askPrice));
-         console.log(bidArr);
-         console.log(Math.max(...bidArr));
-         console.log(Math.min(...askArr));
+         var as = Math.min(...askArr);
+         var bi = Math.max(...bidArr);
+         if(askArr.indexOf(as) === 0){
+           if(bidArr.indexOf(bi) === 0){
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * cbfee))
+          }
+           else if(bidArr.indexOf(bi) === 1){
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * oxfee))
+          }
+           else if(bidArr.indexOf(bi) === 2){
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * hbfee))
+          }
+           else{
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * bmfee))
+          }
+         }
+         else if(askArr.indexOf(as) === 1){
+           if(bidArr.indexOf(bi) === 0){Alert.alert('Trade Path', 'You can buy one lot of selected pair from OKEx with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * cbfee))}
+           else if(bidArr.indexOf(bi) === 1){Alert.alert('Trade Path', 'You can buy one lot of selected pair from OKEx with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * oxfee))}
+           else if(bidArr.indexOf(bi) === 2){Alert.alert('Trade Path', 'You can buy one lot of selected pair from OKEx with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * hbfee))}
+           else{Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * bmfee))}
+         }
+         else if(askArr.indexOf(as) === 2){
+           if(bidArr.indexOf(bi) === 0){Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * cbfee))}
+           else if(bidArr.indexOf(bi) === 1){Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * oxfee))}
+           else if(bidArr.indexOf(bi) === 2){Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * hbfee))}
+           else{Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * bmfee))}
+         }
+         else{
+           if(bidArr.indexOf(bi) === 0){Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * cbfee))}
+           else if(bidArr.indexOf(bi) === 1){Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * oxfee))}
+           else if(bidArr.indexOf(bi) === 2){Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * hbfee))}
+           else{Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * bmfee))}
+         }
       }).done();
       }).done();
       }).done();
@@ -134,9 +264,72 @@ class AssistantContainer extends Component{
          console.log(this.state.BitMax.bidPrice);
          bidArr.push(parseFloat(this.state.BitMax.bidPrice));
          askArr.push(parseFloat(this.state.BitMax.askPrice));
-         console.log(bidArr);
-         console.log(Math.max(...bidArr));
-         console.log(Math.min(...askArr));
+         var as = Math.min(...askArr);
+         var bi = Math.max(...bidArr);
+         if(askArr.indexOf(as) === 0){
+           if(bidArr.indexOf(bi) === 0){
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * cbfee))
+          }
+           else if(bidArr.indexOf(bi) === 1){
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * oxfee))
+          }
+           else if(bidArr.indexOf(bi) === 2){
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * hbfee))
+          }
+           else{
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * bmfee))
+          }
+         }
+         else if(askArr.indexOf(as) === 1){
+           if(bidArr.indexOf(bi) === 0){Alert.alert('Trade Path', 'You can buy one lot of selected pair from OKEx with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * cbfee))}
+           else if(bidArr.indexOf(bi) === 1){Alert.alert('Trade Path', 'You can buy one lot of selected pair from OKEx with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * oxfee))}
+           else if(bidArr.indexOf(bi) === 2){Alert.alert('Trade Path', 'You can buy one lot of selected pair from OKEx with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * hbfee))}
+           else{Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * bmfee))}
+         }
+         else if(askArr.indexOf(as) === 2){
+           if(bidArr.indexOf(bi) === 0){Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * cbfee))}
+           else if(bidArr.indexOf(bi) === 1){Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * oxfee))}
+           else if(bidArr.indexOf(bi) === 2){Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * hbfee))}
+           else{Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * bmfee))}
+         }
+         else{
+           if(bidArr.indexOf(bi) === 0){Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * cbfee))}
+           else if(bidArr.indexOf(bi) === 1){Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * oxfee))}
+           else if(bidArr.indexOf(bi) === 2){Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * hbfee))}
+           else{Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * bmfee))}
+         }
       }).done();
       }).done();
       }).done();
@@ -176,16 +369,81 @@ class AssistantContainer extends Component{
          this.setState({
              BitMax: responseData
          });
+
          console.log(this.state.BitMax.bidPrice);
          bidArr.push(parseFloat(this.state.BitMax.bidPrice));
          askArr.push(parseFloat(this.state.BitMax.askPrice));
-         console.log(bidArr);
-         console.log(Math.max(...bidArr));
-         console.log(Math.min(...askArr));
+         var as = Math.min(...askArr);
+         var bi = Math.max(...bidArr);
+         if(askArr.indexOf(as) === 0){
+           if(bidArr.indexOf(bi) === 0){
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * cbfee))
+          }
+           else if(bidArr.indexOf(bi) === 1){
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * oxfee))
+          }
+           else if(bidArr.indexOf(bi) === 2){
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * hbfee))
+          }
+           else{
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * bmfee))
+          }
+         }
+         else if(askArr.indexOf(as) === 1){
+           if(bidArr.indexOf(bi) === 0){Alert.alert('Trade Path', 'You can buy one lot of selected pair from OKEx with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * cbfee))}
+           else if(bidArr.indexOf(bi) === 1){Alert.alert('Trade Path', 'You can buy one lot of selected pair from OKEx with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * oxfee))}
+           else if(bidArr.indexOf(bi) === 2){Alert.alert('Trade Path', 'You can buy one lot of selected pair from OKEx with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * hbfee))}
+           else{Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * bmfee))}
+         }
+         else if(askArr.indexOf(as) === 2){
+           if(bidArr.indexOf(bi) === 0){Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * cbfee))}
+           else if(bidArr.indexOf(bi) === 1){Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * oxfee))}
+           else if(bidArr.indexOf(bi) === 2){Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * hbfee))}
+           else{Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * bmfee))}
+         }
+         else{
+           if(bidArr.indexOf(bi) === 0){Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * cbfee))}
+           else if(bidArr.indexOf(bi) === 1){Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * oxfee))}
+           else if(bidArr.indexOf(bi) === 2){Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * hbfee))}
+           else{Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * bmfee))}
+         }
       }).done();
       }).done();
       }).done();
     }).done();
+
     }
     else if(this.state.coinpair === "etcbtc")
     {
@@ -224,9 +482,72 @@ class AssistantContainer extends Component{
          console.log(this.state.BitMax.bidPrice);
          bidArr.push(parseFloat(this.state.BitMax.bidPrice));
          askArr.push(parseFloat(this.state.BitMax.askPrice));
-         console.log(bidArr);
-         console.log(Math.max(...bidArr));
-         console.log(Math.min(...askArr));
+         var as = Math.min(...askArr);
+         var bi = Math.max(...bidArr);
+         if(askArr.indexOf(as) === 0){
+           if(bidArr.indexOf(bi) === 0){
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * cbfee))
+          }
+           else if(bidArr.indexOf(bi) === 1){
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * oxfee))
+          }
+           else if(bidArr.indexOf(bi) === 2){
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * hbfee))
+          }
+           else{
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * bmfee))
+          }
+         }
+         else if(askArr.indexOf(as) === 1){
+           if(bidArr.indexOf(bi) === 0){Alert.alert('Trade Path', 'You can buy one lot of selected pair from OKEx with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * cbfee))}
+           else if(bidArr.indexOf(bi) === 1){Alert.alert('Trade Path', 'You can buy one lot of selected pair from OKEx with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * oxfee))}
+           else if(bidArr.indexOf(bi) === 2){Alert.alert('Trade Path', 'You can buy one lot of selected pair from OKEx with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * hbfee))}
+           else{Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * bmfee))}
+         }
+         else if(askArr.indexOf(as) === 2){
+           if(bidArr.indexOf(bi) === 0){Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * cbfee))}
+           else if(bidArr.indexOf(bi) === 1){Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * oxfee))}
+           else if(bidArr.indexOf(bi) === 2){Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * hbfee))}
+           else{Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * bmfee))}
+         }
+         else{
+           if(bidArr.indexOf(bi) === 0){Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * cbfee))}
+           else if(bidArr.indexOf(bi) === 1){Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * oxfee))}
+           else if(bidArr.indexOf(bi) === 2){Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * hbfee))}
+           else{Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * bmfee))}
+         }
       }).done();
       }).done();
       }).done();
@@ -269,9 +590,72 @@ class AssistantContainer extends Component{
          console.log(this.state.BitMax.bidPrice);
          bidArr.push(parseFloat(this.state.BitMax.bidPrice));
          askArr.push(parseFloat(this.state.BitMax.askPrice));
-         console.log(bidArr);
-         console.log(Math.max(...bidArr));
-         console.log(Math.min(...askArr));
+         var as = Math.min(...askArr);
+         var bi = Math.max(...bidArr);
+         if(askArr.indexOf(as) === 0){
+           if(bidArr.indexOf(bi) === 0){
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * cbfee))
+          }
+           else if(bidArr.indexOf(bi) === 1){
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * oxfee))
+          }
+           else if(bidArr.indexOf(bi) === 2){
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * hbfee))
+          }
+           else{
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * bmfee))
+          }
+         }
+         else if(askArr.indexOf(as) === 1){
+           if(bidArr.indexOf(bi) === 0){Alert.alert('Trade Path', 'You can buy one lot of selected pair from OKEx with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * cbfee))}
+           else if(bidArr.indexOf(bi) === 1){Alert.alert('Trade Path', 'You can buy one lot of selected pair from OKEx with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * oxfee))}
+           else if(bidArr.indexOf(bi) === 2){Alert.alert('Trade Path', 'You can buy one lot of selected pair from OKEx with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * hbfee))}
+           else{Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * bmfee))}
+         }
+         else if(askArr.indexOf(as) === 2){
+           if(bidArr.indexOf(bi) === 0){Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * cbfee))}
+           else if(bidArr.indexOf(bi) === 1){Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * oxfee))}
+           else if(bidArr.indexOf(bi) === 2){Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * hbfee))}
+           else{Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * bmfee))}
+         }
+         else{
+           if(bidArr.indexOf(bi) === 0){Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * cbfee))}
+           else if(bidArr.indexOf(bi) === 1){Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * oxfee))}
+           else if(bidArr.indexOf(bi) === 2){Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * hbfee))}
+           else{Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * bmfee))}
+         }
       }).done();
       }).done();
       }).done();
@@ -314,9 +698,72 @@ class AssistantContainer extends Component{
          console.log(this.state.BitMax.bidPrice);
          bidArr.push(parseFloat(this.state.BitMax.bidPrice));
          askArr.push(parseFloat(this.state.BitMax.askPrice));
-         console.log(bidArr);
-         console.log(Math.max(...bidArr));
-         console.log(Math.min(...askArr));
+         var as = Math.min(...askArr);
+         var bi = Math.max(...bidArr);
+         if(askArr.indexOf(as) === 0){
+           if(bidArr.indexOf(bi) === 0){
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * cbfee))
+          }
+           else if(bidArr.indexOf(bi) === 1){
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * oxfee))
+          }
+           else if(bidArr.indexOf(bi) === 2){
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * hbfee))
+          }
+           else{
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * bmfee))
+          }
+         }
+         else if(askArr.indexOf(as) === 1){
+           if(bidArr.indexOf(bi) === 0){Alert.alert('Trade Path', 'You can buy one lot of selected pair from OKEx with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * cbfee))}
+           else if(bidArr.indexOf(bi) === 1){Alert.alert('Trade Path', 'You can buy one lot of selected pair from OKEx with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * oxfee))}
+           else if(bidArr.indexOf(bi) === 2){Alert.alert('Trade Path', 'You can buy one lot of selected pair from OKEx with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * hbfee))}
+           else{Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * bmfee))}
+         }
+         else if(askArr.indexOf(as) === 2){
+           if(bidArr.indexOf(bi) === 0){Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * cbfee))}
+           else if(bidArr.indexOf(bi) === 1){Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * oxfee))}
+           else if(bidArr.indexOf(bi) === 2){Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * hbfee))}
+           else{Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * bmfee))}
+         }
+         else{
+           if(bidArr.indexOf(bi) === 0){Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * cbfee))}
+           else if(bidArr.indexOf(bi) === 1){Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * oxfee))}
+           else if(bidArr.indexOf(bi) === 2){Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * hbfee))}
+           else{Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * bmfee))}
+         }
       }).done();
       }).done();
       }).done();
@@ -359,9 +806,72 @@ class AssistantContainer extends Component{
          console.log(this.state.BitMax.bidPrice);
          bidArr.push(parseFloat(this.state.BitMax.bidPrice));
          askArr.push(parseFloat(this.state.BitMax.askPrice));
-         console.log(bidArr);
-         console.log(Math.max(...bidArr));
-         console.log(Math.min(...askArr));
+         var as = Math.min(...askArr);
+         var bi = Math.max(...bidArr);
+         if(askArr.indexOf(as) === 0){
+           if(bidArr.indexOf(bi) === 0){
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * cbfee))
+          }
+           else if(bidArr.indexOf(bi) === 1){
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * oxfee))
+          }
+           else if(bidArr.indexOf(bi) === 2){
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * hbfee))
+          }
+           else{
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * bmfee))
+          }
+         }
+         else if(askArr.indexOf(as) === 1){
+           if(bidArr.indexOf(bi) === 0){Alert.alert('Trade Path', 'You can buy one lot of selected pair from OKEx with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * cbfee))}
+           else if(bidArr.indexOf(bi) === 1){Alert.alert('Trade Path', 'You can buy one lot of selected pair from OKEx with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * oxfee))}
+           else if(bidArr.indexOf(bi) === 2){Alert.alert('Trade Path', 'You can buy one lot of selected pair from OKEx with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * hbfee))}
+           else{Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * bmfee))}
+         }
+         else if(askArr.indexOf(as) === 2){
+           if(bidArr.indexOf(bi) === 0){Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * cbfee))}
+           else if(bidArr.indexOf(bi) === 1){Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * oxfee))}
+           else if(bidArr.indexOf(bi) === 2){Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * hbfee))}
+           else{Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * bmfee))}
+         }
+         else{
+           if(bidArr.indexOf(bi) === 0){Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * cbfee))}
+           else if(bidArr.indexOf(bi) === 1){Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * oxfee))}
+           else if(bidArr.indexOf(bi) === 2){Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * hbfee))}
+           else{Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * bmfee))}
+         }
       }).done();
       }).done();
       }).done();
@@ -404,9 +914,72 @@ class AssistantContainer extends Component{
          console.log(this.state.BitMax.bidPrice);
          bidArr.push(parseFloat(this.state.BitMax.bidPrice));
          askArr.push(parseFloat(this.state.BitMax.askPrice));
-         console.log(bidArr);
-         console.log(Math.max(...bidArr));
-         console.log(Math.min(...askArr));
+         var as = Math.min(...askArr);
+         var bi = Math.max(...bidArr);
+         if(askArr.indexOf(as) === 0){
+           if(bidArr.indexOf(bi) === 0){
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * cbfee))
+          }
+           else if(bidArr.indexOf(bi) === 1){
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * oxfee))
+          }
+           else if(bidArr.indexOf(bi) === 2){
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * hbfee))
+          }
+           else{
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * bmfee))
+          }
+         }
+         else if(askArr.indexOf(as) === 1){
+           if(bidArr.indexOf(bi) === 0){Alert.alert('Trade Path', 'You can buy one lot of selected pair from OKEx with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * cbfee))}
+           else if(bidArr.indexOf(bi) === 1){Alert.alert('Trade Path', 'You can buy one lot of selected pair from OKEx with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * oxfee))}
+           else if(bidArr.indexOf(bi) === 2){Alert.alert('Trade Path', 'You can buy one lot of selected pair from OKEx with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * hbfee))}
+           else{Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * bmfee))}
+         }
+         else if(askArr.indexOf(as) === 2){
+           if(bidArr.indexOf(bi) === 0){Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * cbfee))}
+           else if(bidArr.indexOf(bi) === 1){Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * oxfee))}
+           else if(bidArr.indexOf(bi) === 2){Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * hbfee))}
+           else{Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * bmfee))}
+         }
+         else{
+           if(bidArr.indexOf(bi) === 0){Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * cbfee))}
+           else if(bidArr.indexOf(bi) === 1){Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * oxfee))}
+           else if(bidArr.indexOf(bi) === 2){Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * hbfee))}
+           else{Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * bmfee))}
+         }
       }).done();
       }).done();
       }).done();
@@ -446,9 +1019,72 @@ class AssistantContainer extends Component{
          console.log(this.state.BitMax.bidPrice);
          bidArr.push(parseFloat(this.state.BitMax.bidPrice));
          askArr.push(parseFloat(this.state.BitMax.askPrice));
-         console.log(bidArr);
-         console.log(Math.max(...bidArr));
-         console.log(Math.min(...askArr));
+         var as = Math.min(...askArr);
+         var bi = Math.max(...bidArr);
+         if(askArr.indexOf(as) === 0){
+           if(bidArr.indexOf(bi) === 0){
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * cbfee))
+          }
+           else if(bidArr.indexOf(bi) === 1){
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * oxfee))
+          }
+           else if(bidArr.indexOf(bi) === 2){
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * hbfee))
+          }
+           else{
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * bmfee))
+          }
+         }
+         else if(askArr.indexOf(as) === 1){
+           if(bidArr.indexOf(bi) === 0){Alert.alert('Trade Path', 'You can buy one lot of selected pair from OKEx with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * cbfee))}
+           else if(bidArr.indexOf(bi) === 1){Alert.alert('Trade Path', 'You can buy one lot of selected pair from OKEx with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * oxfee))}
+           else if(bidArr.indexOf(bi) === 2){Alert.alert('Trade Path', 'You can buy one lot of selected pair from OKEx with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * hbfee))}
+           else{Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * bmfee))}
+         }
+         else if(askArr.indexOf(as) === 2){
+           if(bidArr.indexOf(bi) === 0){Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * cbfee))}
+           else if(bidArr.indexOf(bi) === 1){Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * oxfee))}
+           else if(bidArr.indexOf(bi) === 2){Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * hbfee))}
+           else{Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * bmfee))}
+         }
+         else{
+           if(bidArr.indexOf(bi) === 0){Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * cbfee))}
+           else if(bidArr.indexOf(bi) === 1){Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * oxfee))}
+           else if(bidArr.indexOf(bi) === 2){Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * hbfee))}
+           else{Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * bmfee))}
+         }
       }).done();
       }).done();
       }).done();
@@ -491,20 +1127,82 @@ class AssistantContainer extends Component{
          console.log(this.state.BitMax.bidPrice);
          bidArr.push(parseFloat(this.state.BitMax.bidPrice));
          askArr.push(parseFloat(this.state.BitMax.askPrice));
-         console.log(bidArr);
-         console.log(Math.max(...bidArr));
-         console.log(Math.min(...askArr));
+         var as = Math.min(...askArr);
+         var bi = Math.max(...bidArr);
+         if(askArr.indexOf(as) === 0){
+           if(bidArr.indexOf(bi) === 0){
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * cbfee))
+          }
+           else if(bidArr.indexOf(bi) === 1){
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * oxfee))
+          }
+           else if(bidArr.indexOf(bi) === 2){
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * hbfee))
+          }
+           else{
+             Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * cbfee) + ', Sell fee: ' + parseFloat(bi * bmfee))
+          }
+         }
+         else if(askArr.indexOf(as) === 1){
+           if(bidArr.indexOf(bi) === 0){Alert.alert('Trade Path', 'You can buy one lot of selected pair from OKEx with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * cbfee))}
+           else if(bidArr.indexOf(bi) === 1){Alert.alert('Trade Path', 'You can buy one lot of selected pair from OKEx with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * oxfee))}
+           else if(bidArr.indexOf(bi) === 2){Alert.alert('Trade Path', 'You can buy one lot of selected pair from OKEx with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * hbfee))}
+           else{Alert.alert('Trade Path', 'You can buy one lot of selected pair from Coinbene with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * oxfee) + ', Sell fee: ' + parseFloat(bi * bmfee))}
+         }
+         else if(askArr.indexOf(as) === 2){
+           if(bidArr.indexOf(bi) === 0){Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * cbfee))}
+           else if(bidArr.indexOf(bi) === 1){Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * oxfee))}
+           else if(bidArr.indexOf(bi) === 2){Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * hbfee))}
+           else{Alert.alert('Trade Path', 'You can buy one lot of selected pair from HitBTC with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * hbfee) + ', Sell fee: ' + parseFloat(bi * bmfee))}
+         }
+         else{
+           if(bidArr.indexOf(bi) === 0){Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from Coinbene with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * cbfee))}
+           else if(bidArr.indexOf(bi) === 1){Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from OKEx with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * oxfee))}
+           else if(bidArr.indexOf(bi) === 2){Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from HitBTC with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * hbfee))}
+           else{Alert.alert('Trade Path', 'You can buy one lot of selected pair from BitMax with the price: '
+            + as + ', You can sell one lot of selected pair from BitMax with the price: '
+            + bi + ', Buy fee: ' + parseFloat(as * bmfee) + ', Sell fee: ' + parseFloat(bi * bmfee))}
+         }
       }).done();
       }).done();
       }).done();
     }).done();
     }
-    else Alert.alert("siego");
+    else Alert.alert("Unhandled");
   }
-
-
 render() {
   return (
+
       <View style={{ flex: 1, alignSelf: 'center' }}>
         <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Select the pair you want to operate:</Text>
         <Picker style={{ height: 50, width: 150 }} mode = 'dropdown' selectedValue = {this.state.coinpair} onValueChange = {this.updatePair}>
@@ -530,7 +1228,7 @@ render() {
       </View>
     );
   }
-
 }
+
 
 export default AssistantContainer

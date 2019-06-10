@@ -23,16 +23,12 @@ const BookBlock = (props) => {
 const styles = StyleSheet.create({
 container: {
     display: "flex",
-    marginBottom: 20,
-    borderBottomColor: "#e5e5e5",
-    borderBottomWidth: 3,
-    padding: 2
 },
 upperRow: {
     display: "flex",
     flexDirection: "row",
-    marginBottom: 15,
-    padding: 5
+    padding: 5,
+    backgroundColor: '#424242'
 },
 coinSymbol: {
     marginTop: 10,
@@ -44,7 +40,8 @@ coinName: {
     marginTop: 10,
     marginLeft: 5,
     marginRight: 20,
-    fontWeight: "bold"
+    fontWeight: "bold",
+    color: "white"
 },
 seperator: {
     marginTop: 10,

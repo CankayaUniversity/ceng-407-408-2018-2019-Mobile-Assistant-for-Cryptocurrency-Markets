@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Text, TouchableOpacity, Alert } from 'react-native';
 import { withNavigation } from 'react-navigation';
-import MarketBlock from './MarketBlock'
+import MarketBlock from './MarketBlock';
+import Header from './Header';
 
 class MarketContainer extends Component {
   //No APIs provide market volumes etc. so it's hardcoded.
   render() {
     return (
+      <View style={{ backgroundColor: '#424242' }}>
       <View contentContainerStyle={coinContainer}>
         <TouchableOpacity onPress={() => {
           this.props.navigation.navigate('BitMax');
@@ -49,6 +51,7 @@ class MarketContainer extends Component {
           />
         </TouchableOpacity>
       </View>
+      </View>
     )
   }
 }
@@ -57,9 +60,13 @@ const styles = {
   coinContainer: {
     paddingBottom: 50,
     marginTop: 10
+  },
+  headerContainer: {
+    paddingBottom: 50,
+    marginTop: 10,
   }
 }
 
-const { coinContainer } = styles;
+const { coinContainer, headerContainer } = styles;
 
 export default MarketContainer

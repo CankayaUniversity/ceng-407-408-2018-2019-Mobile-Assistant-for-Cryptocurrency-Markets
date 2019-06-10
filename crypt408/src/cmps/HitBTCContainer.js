@@ -4,9 +4,11 @@ import BookBlock from './BookBlock';
 import Header from './Header';
 
 class HitBTCContainer extends Component {
+  _isMounted = true;
   state = { BTCUSD: [], ETHUSD: [], ETHBTC: [], ETCUSD: [], LTCUSD: [], BTCUSDB: [], ETHUSDB: [], ETHBTCB: [], ETCUSDB: [], LTCUSDB: [] };
-  componentWillMount() {
-    fetch('https://api.hitbtc.com/api/2/public/orderbook/btcusd?limit=10').then((response) => response.json()).then((responseData) => {
+  componentDidMount() {
+    if(this._isMounted){
+      fetch('https://api.hitbtc.com/api/2/public/orderbook/btcusd?limit=10').then((response) => response.json()).then((responseData) => {
         this.setState({
             BTCUSD: responseData.ask,
             BTCUSDB: responseData.bid
@@ -45,6 +47,10 @@ class HitBTCContainer extends Component {
     }).done();
     }).done();
   }).done();
+  }
+  }
+  componentWillUnmount() {
+    this._isMounted = false;
   }
   renderBTCUSD() {
       return this.state.BTCUSD.map(bu =>
@@ -150,8 +156,14 @@ class HitBTCContainer extends Component {
 
   render() {
     return (
+      <View style={{ flex:1 }}>
+      <View style={{ marginBottom: 8 }}>
+      <Text style={{ alignSelf: 'center'}}>
+        <Text style={{ fontWeight: 'bold', fontSize: 15 }}>Fees:</Text> <Text style={{ fontSize: 15 }}>Maker Fee: 0.1%, </Text>
+        <Text style={{ fontSize: 15 }}>Taker Fee: 0.2%</Text>
+      </Text>
+      </View>
       <ScrollView style={{ flex: 1 }}>
-        <Header text = "Order Books" />
         {this.renderBTCUSD()}
         {this.renderETHUSD()}
         {this.renderETHBTC()}
@@ -163,6 +175,7 @@ class HitBTCContainer extends Component {
         {this.renderETCUSDB()}
         {this.renderLTCUSDB()}
       </ScrollView>
+      </View>
     );
   }
 }

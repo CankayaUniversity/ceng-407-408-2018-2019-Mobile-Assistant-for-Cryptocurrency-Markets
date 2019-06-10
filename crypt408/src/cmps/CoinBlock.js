@@ -7,7 +7,7 @@ import { images } from '../Utility/CoinImages.js';
 const CoinBlock = (props) => {
   return (
     <TouchableOpacity onPress={() => {
-      Alert.alert('Markets');
+      Alert.alert(props.symbol, 'Price in BTC: ' + parseFloat(props.btc) + '\n' + 'Available Supply: ' + parseInt(props.as) + '\n' + 'Total Supply: ' + parseInt(props.ts) + '\n' + 'Maximum Supply: ' + parseInt(props.ms));
     }}>
     <View style={container}>
 
@@ -24,10 +24,10 @@ const CoinBlock = (props) => {
 
         <View style={statisticsContainer}>
 
-            <Text>24h:
+            <Text style={{ color: "white" }}>24h:
                  <Text style={props.per < 0 ? percentChangeMinus : percentChangePlus }> {props.per} % </Text>
             </Text>
-            <Text>Volume:
+            <Text style={{ color: "white" }}>Volume:
                 <Text style={coinPrice}> ${props.vol}  </Text>
             </Text>
 
@@ -62,7 +62,8 @@ coinName: {
     marginTop: 10,
     marginLeft: 5,
     marginRight: 20,
-    fontWeight: "bold"
+    fontWeight: "bold",
+    color: "white"
 },
 seperator: {
     marginTop: 10,
@@ -72,6 +73,7 @@ coinPrice: {
     marginLeft: "auto",
     marginRight: 10,
     fontWeight: "bold",
+    color: "white"
 },
 image: {
     width: 35,
@@ -79,11 +81,12 @@ image: {
 },
 moneySymbol: {
     fontWeight: "bold",
+    color: "white"
 },
 statisticsContainer: {
     display: "flex",
     borderTopColor: "#FAFAFA",
-    borderTopWidth: 2,
+    borderTopWidth: 0,
     padding: 10,
     flexDirection: "row",
     justifyContent: "space-around"

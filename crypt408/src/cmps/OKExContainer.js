@@ -4,9 +4,11 @@ import BookBlock from './BookBlock';
 import Header from './Header';
 
 class OKExContainer extends Component {
+  _isMounted = true;
   state = { BTCUSD: [], ETHUSD: [], ETHBTC: [], ETCUSD: [], LTCUSD: [], BTCUSDB: [], ETHUSDB: [], ETHBTCB: [], ETCUSDB: [], LTCUSDB: [] };
-  componentWillMount() {
-    fetch('https://www.okex.com/api/spot/v3/instruments/BTC-USDT/book?size=10&depth=0.2').then((response) => response.json()).then((responseData) => {
+  componentDidMount() {
+    if (this._isMounted){
+      fetch('https://www.okex.com/api/spot/v3/instruments/BTC-USDT/book?size=10&depth=0.2').then((response) => response.json()).then((responseData) => {
         this.setState({
             BTCUSD: responseData.asks,
             BTCUSDB: responseData.bids
@@ -45,6 +47,10 @@ class OKExContainer extends Component {
     }).done();
     }).done();
   }).done();
+  }
+}
+  componentWillUnmount() {
+    this._isMounted = false;
   }
   renderBTCUSD() {
       return this.state.BTCUSD && this.state.BTCUSD.map(bu =>
@@ -150,8 +156,15 @@ class OKExContainer extends Component {
 
   render() {
     return (
+      <View style={{ flex:1 }}>
+      <View style={{ marginBottom: 8 }}>
+      <Text style={{ alignSelf: 'center'}}>
+        <Text style={{ fontWeight: 'bold', fontSize: 15 }}>Fees:</Text> <Text style={{ fontSize: 15 }}>Maker Fee: 0.1%, </Text>
+        <Text style={{ fontSize: 15 }}>Taker Fee: 0.15%</Text>
+      </Text>
+      </View>
+
       <ScrollView style={{ flex: 1 }}>
-        <Text style={{ alignSelf: 'center' }}>Fees bla bla bla bla</Text>
         {this.renderBTCUSD()}
         {this.renderETHUSD()}
         {this.renderETHBTC()}
@@ -163,6 +176,7 @@ class OKExContainer extends Component {
         {this.renderETCUSDB()}
         {this.renderLTCUSDB()}
       </ScrollView>
+      </View>
     );
   }
 }

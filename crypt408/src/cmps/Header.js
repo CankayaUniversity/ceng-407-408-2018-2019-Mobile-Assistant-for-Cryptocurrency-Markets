@@ -14,12 +14,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     display: "flex",
     marginTop: 10,
-    flex: 1
+    flex: 1,
   },
   textStyle: {
     fontWeight: "bold",
     fontSize: 26,
-    color: '#000000'
+    color: '#FFFFFF'
   }
 })
 

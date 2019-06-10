@@ -27,16 +27,13 @@ const MarketBlock = (props) => {
 const styles = StyleSheet.create({
 container: {
     display: "flex",
-    marginBottom: 20,
-    borderBottomColor: "#e5e5e5",
-    borderBottomWidth: 3,
-    padding: 2
+    justifyContent: "center",
 },
 upperRow: {
     display: "flex",
     flexDirection: "row",
-    marginBottom: 15,
-    padding: 5
+    padding: 5,
+    backgroundColor: '#424242'
 },
 coinSymbol: {
     marginTop: 10,

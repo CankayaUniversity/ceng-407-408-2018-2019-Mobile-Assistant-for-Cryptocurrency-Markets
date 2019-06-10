@@ -4,9 +4,11 @@ import BookBlock from './BookBlock';
 import Header from './Header';
 
 class CoinbeneContainer extends Component {
+  _isMounted = true;
   state = { BTCUSD: [], ETHUSD: [], ETHBTC: [], ETCUSD: [], LTCUSD: [], BTCUSDB: [], ETHUSDB: [], ETHBTCB: [], ETCUSDB: [], LTCUSDB: [] };
-  componentWillMount() {
-    fetch('http://api.coinbene.com/v1/market/orderbook?symbol=btcusdt&depth=10').then((response) => response.json()).then((responseData) => {
+  componentDidMount() {
+    if(this._isMounted){
+      fetch('http://api.coinbene.com/v1/market/orderbook?symbol=btcusdt&depth=10').then((response) => response.json()).then((responseData) => {
         this.setState({
             BTCUSD: responseData.orderbook.asks,
             BTCUSDB: responseData.orderbook.bids
@@ -45,6 +47,10 @@ class CoinbeneContainer extends Component {
     }).done();
     }).done();
   }).done();
+  }
+  }
+  componentWillUnmount() {
+    this._isMounted = false;
   }
   renderBTCUSD() {
       return this.state.BTCUSD.map(bu =>
@@ -150,6 +156,13 @@ class CoinbeneContainer extends Component {
 
   render() {
     return (
+      <View style={{ flex:1 }}>
+      <View style={{ marginBottom: 8 }}>
+      <Text style={{ alignSelf: 'center'}}>
+        <Text style={{ fontWeight: 'bold', fontSize: 15 }}>Fees:</Text> <Text style={{ fontSize: 15 }}>Maker Fee: 0.1%, </Text>
+        <Text style={{ fontSize: 15 }}>Taker Fee: 0.1%</Text>
+      </Text>
+      </View>
       <ScrollView style={{ flex: 1 }}>
         {this.renderBTCUSD()}
         {this.renderETHUSD()}
@@ -162,6 +175,7 @@ class CoinbeneContainer extends Component {
         {this.renderETCUSDB()}
         {this.renderLTCUSDB()}
       </ScrollView>
+      </View>
     );
   }
 }
