@@ -45,7 +45,8 @@ coinName: {
     marginTop: 10,
     marginLeft: 5,
     marginRight: 20,
-    fontWeight: "bold"
+    fontWeight: "bold",
+	color: "white"
 },
 seperator: {
     marginTop: 10,
@@ -54,7 +55,8 @@ coinPrice: {
     marginTop: 10,
     marginLeft: "auto",
     marginRight: 10,
-    fontWeight: "bold",
+	color: "white",
+    fontWeight: "bold"
 },
 image: {
     width: 35,
@@ -62,6 +64,7 @@ image: {
 },
 moneySymbol: {
     fontWeight: "bold",
+	color: "white"
 },
 statisticsContainer: {
     display: "flex",
